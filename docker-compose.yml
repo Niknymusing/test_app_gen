@@ -1,0 +1,90 @@
+services:
+  meu-coder-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meu-coder-agent
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WORKSPACE_PATH=/workspace
+      - AGENT_ID=${AGENT_ID:-meu-coder-001}
+      - PROJECT_ROLE=${PROJECT_ROLE:-developer}
+      - TECH_STACK=${TECH_STACK:-general}
+      - RUN_MODE=server
+      - MCP_FILESYSTEM_URI=http://mcp-filesystem:8200
+      - MCP_DOCS_URI=http://mcp-docs:8201
+      - A2A_DISCOVERY_URI=http://a2a-discovery:8101
+      - A2A_AGENT_PORT=8100
+      - A2A_JWT_SECRET=${A2A_JWT_SECRET:-meu-shared-secret}
+      - GIT_REPO_URL=${GIT_REPO_URL}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+      - GIT_USER_NAME=${GIT_USER_NAME:-MEU Agent}
+      - GIT_USER_EMAIL=${GIT_USER_EMAIL:-agent@meu.dev}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    env_file:
+      - /Users/nilskakoseosnystrom/projects/meu_agent_network_generator/.env
+    ports:
+      - "8000:8000"  # Main API port
+      - "8100:8100"  # A2A communication port
+    volumes:
+      - .:/workspace
+      - agent_logs:/workspace/logs
+      - /var/run/docker.sock:/var/run/docker.sock  # For Git/CI-CD operations
+      - /Users/nilskakoseosnystrom/projects/meu_agent_network_generator/.env:/app/.env:ro # Added for runtime override
+    depends_on:
+      - mcp-filesystem
+      - mcp-docs
+      - a2a-discovery
+    networks:
+      - meu-network
+    restart: unless-stopped
+
+  # Mock MCP Filesystem Service
+  mcp-filesystem:
+    image: nginx:alpine
+    container_name: mcp-filesystem
+    ports:
+      - "8200:80"
+    volumes:
+      - ./mock-services/mcp-filesystem.conf:/etc/nginx/conf.d/default.conf
+      - ./mock-services/mcp-responses:/usr/share/nginx/html
+    networks:
+      - meu-network
+    restart: unless-stopped
+
+  # Mock MCP Documentation Service
+  mcp-docs:
+    image: nginx:alpine
+    container_name: mcp-docs
+    ports:
+      - "8201:80"
+    volumes:
+      - ./mock-services/mcp-docs.conf:/etc/nginx/conf.d/default.conf
+      - ./mock-services/mcp-docs:/usr/share/nginx/html
+    networks:
+      - meu-network
+    restart: unless-stopped
+
+  # Mock A2A Discovery Service
+  a2a-discovery:
+    image: nginx:alpine
+    container_name: a2a-discovery
+    ports:
+      - "8101:80"
+    volumes:
+      - ./mock-services/a2a-discovery.conf:/etc/nginx/conf.d/default.conf
+      - ./mock-services/a2a-responses:/usr/share/nginx/html
+    networks:
+      - meu-network
+    restart: unless-stopped
+
+volumes:
+  workspace_data:
+    driver: local
+  agent_logs:
+    driver: local
+
+networks:
+  meu-network:
+    driver: bridge

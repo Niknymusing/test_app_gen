@@ -1,0 +1,47 @@
+# MEU Framework Coder Agent Dependencies
+
+# Core framework
+langgraph>=0.0.26
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-community>=0.0.20
+langchain-anthropic
+pyyaml>=6.0
+
+# FastAPI backend
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# HTTP client for A2A and MCP
+requests>=2.31.0
+httpx>=0.25.0
+
+# JWT for A2A authentication
+PyJWT>=2.8.0
+
+# Async support
+aiofiles>=23.2.0
+asyncio-mqtt>=0.13.0
+
+# Logging and monitoring
+structlog>=23.2.0
+colorama>=0.4.6
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.12.0
+
+# Development tools
+black>=23.10.0
+isort>=5.12.0
+flake8>=6.1.0
+mypy>=1.7.0
+
+# Additional utilities
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# Git integration for real CI/CD capabilities
+GitPython>=3.1.40

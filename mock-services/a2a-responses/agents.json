@@ -1,0 +1,34 @@
+{
+  "success": true,
+  "agents": [
+    {
+      "agent_id": "meu-coder-001",
+      "display_name": "MEU Coder Agent",
+      "description": "Advanced MEU framework agent with Claude Code integration",
+      "capabilities": [
+        "code_implementation",
+        "architecture_design",
+        "test_automation",
+        "meu_framework"
+      ],
+      "status": "online",
+      "endpoint": "http://meu-coder-agent:8000",
+      "last_seen": "2025-10-20T13:00:00Z"
+    },
+    {
+      "agent_id": "ws-state-tracker-001",
+      "display_name": "Workspace State Tracker",
+      "description": "Haskell-based MEU workspace state tracker",
+      "capabilities": [
+        "workspace_management",
+        "state_tracking",
+        "axiom_verification"
+      ],
+      "status": "online",
+      "endpoint": "http://ws-state-tracker:9000",
+      "last_seen": "2025-10-20T13:00:00Z"
+    }
+  ],
+  "total_count": 2,
+  "discovery_timestamp": "2025-10-20T13:00:00Z"
+}

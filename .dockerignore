@@ -1,0 +1,44 @@
+# .dockerignore
+
+# Exclude test code and configs
+tests/
+pytest.ini
+
+# Exclude notebooks
+example.ipynb
+
+# Exclude dev requirements
+requirements-dev.txt
+
+# Usual Python cache and VCS ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.git/
+.gitignore
+
+# READMEs & images
+readme-images/
+README.md
+
+# ========================
+# Node / JavaScript
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.env.local
+.env.*.local
+.eslintcache
+.next/
+out/
+coverage/
+.cache/
+*.tsbuildinfo

@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "resources": [
+    {
+      "type": "file",
+      "path": "/workspace/main.py",
+      "name": "main.py",
+      "language": "python",
+      "size": 1024,
+      "modified": "2025-10-20T13:00:00Z"
+    },
+    {
+      "type": "file",
+      "path": "/workspace/requirements.txt",
+      "name": "requirements.txt",
+      "language": "text",
+      "size": 512,
+      "modified": "2025-10-20T12:00:00Z"
+    },
+    {
+      "type": "directory",
+      "path": "/workspace/src",
+      "name": "src",
+      "size": 0,
+      "modified": "2025-10-20T11:00:00Z"
+    }
+  ],
+  "total_count": 3,
+  "server_version": "1.0.0",
+  "mcp_version": "2025-03-26"
+}

@@ -1,0 +1,44 @@
+name: "MEU Coder Agent"
+description: "Advanced Model-Execute-Update (MEU) framework agent with Claude Code integration for comprehensive software development tasks."
+version: "1.0.0"
+author: "Agent Builder CLI"
+tags:
+  - "meu"
+  - "coder"
+  - "claude-code"
+  - "development"
+  - "a2a"
+  - "mcp"
+  - "advanced"
+
+features:
+  - "MEU (Model-Execute-Update) framework implementation"
+  - "Claude Code integration for file operations, testing, and code analysis"
+  - "A2A (Agent-to-Agent) communication capabilities"
+  - "MCP (Model Context Protocol) integration for context sharing"
+  - "Hierarchical triplet-based workspace management"
+  - "Advanced state tracking with registries for values, tests, verifiers, and axioms"
+  - "Docker environment integration"
+  - "Comprehensive testing and build automation"
+
+requirements:
+  python: ">=3.11"
+  dependencies:
+    - "langgraph>=0.1.0"
+    - "langchain>=0.1.0"
+    - "langchain-anthropic>=0.1.0"
+    - "a2a-sdk>=0.2.0"
+    - "mcp>=1.0.0"
+    - "fastapi>=0.104.0"
+    - "uvicorn>=0.24.0"
+
+use_cases:
+  - "Complex software development projects requiring structured implementation"
+  - "Multi-agent collaboration scenarios with code implementation and testing"
+  - "Projects requiring formal verification and test-driven development"
+  - "Advanced workspace state tracking and management"
+  - "Integration with external development tools and environments"
+
+documentation:
+  readme: "README.md"
+  config_example: "agent_config.yaml"

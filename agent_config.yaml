@@ -1,0 +1,138 @@
+agents:
+  meu-coder:
+    entry_point: analyze_requirements
+    nodes:
+      analyze_requirements:
+        function: src.agent_graph.nodes.meu_model.analyze_requirements_node
+        prompt: data/prompts/meu_model/analyze_requirements.yaml
+        tool_usage: true
+      collaborate_with_agents:
+        function: src.agent_graph.nodes.collaboration.collaborate_node
+        prompt: data/prompts/collaboration/collaborate.yaml
+        tool_usage: true
+      decide_next_action:
+        function: src.agent_graph.nodes.router.decide_next_action_node
+        prompt: data/prompts/router/decide_next_action.yaml
+        tool_usage: false
+      evaluate_results:
+        function: src.agent_graph.nodes.meu_update.evaluate_results_node
+        prompt: data/prompts/meu_update/evaluate_results.yaml
+        tool_usage: true
+      implement_solution:
+        function: src.agent_graph.nodes.meu_execute.implement_solution_node
+        prompt: data/prompts/meu_execute/implement_solution.yaml
+        tool_usage: true
+      plan_implementation:
+        function: src.agent_graph.nodes.meu_model.plan_implementation_node
+        prompt: data/prompts/meu_model/plan_implementation.yaml
+        tool_usage: true
+      run_tests:
+        function: src.agent_graph.nodes.meu_execute.run_tests_node
+        prompt: data/prompts/meu_execute/run_tests.yaml
+        tool_usage: true
+      update_workspace:
+        function: src.agent_graph.nodes.meu_update.update_workspace_node
+        prompt: data/prompts/meu_update/update_workspace.yaml
+        tool_usage: true
+    settings:
+      databases:
+      - config:
+          persist_directory: ./data/meu_workspace
+        name: meu_workspace_db
+        provider: chroma
+        type: vector
+      meu_workspace:
+        axiom_registry: true
+        test_registry: true
+        value_registry: true
+        verifier_registry: true
+      state: src.agent_graph.states.meu_state.MEUState
+      use_memory: true
+global-settings:
+  llms:
+    meu-coder:
+      analyze_code:
+        anthropic-claude:
+          model: claude-3-5-sonnet-20241022
+          provider: anthropic
+          tools:
+          - function: src.resources.tools.claude_code.claude_code_tools.read_file
+            name: read_file
+          - function: src.resources.tools.claude_code.claude_code_tools.search_code
+            name: search_code
+          - function: src.resources.tools.mcp.mcp_tools.get_resources
+            name: mcp_get_resources
+          - function: src.resources.tools.a2a.a2a_tools.discover_agents
+            name: a2a_discover_agents
+          - function: src.resources.tools.git_cicd.git_tools.initialize_repository
+            name: initialize_repository
+      evaluate_results:
+        anthropic-claude:
+          model: claude-3-5-sonnet-20241022
+          provider: anthropic
+          tools:
+          - function: src.resources.tools.claude_code.claude_code_tools.analyze_test_results
+            name: analyze_test_results
+          - function: src.resources.tools.meu.meu_tools.update_workspace_state
+            name: update_meu_state
+          - function: src.resources.tools.a2a.a2a_tools.send_message
+            name: a2a_communicate
+          - function: src.resources.tools.a2a.a2a_tools.share_git_progress
+            name: share_git_progress
+          - function: src.resources.tools.a2a.a2a_tools.coordinate_development_task
+            name: coordinate_development_task
+          - function: src.resources.tools.git_cicd.git_tools.sync_with_remote
+            name: sync_with_remote
+      implement_code:
+        anthropic-claude:
+          model: claude-3-5-sonnet-20241022
+          provider: anthropic
+          tools:
+          - function: src.resources.tools.claude_code.claude_code_tools.write_file
+            name: write_file
+          - function: src.resources.tools.claude_code.claude_code_tools.edit_file
+            name: edit_file
+          - function: src.resources.tools.claude_code.claude_code_tools.run_tests
+            name: run_tests
+          - function: src.resources.tools.claude_code.claude_code_tools.check_build_status
+            name: check_build_status
+          - function: src.resources.tools.mcp.mcp_tools.inject_context
+            name: mcp_inject_context
+          - function: src.resources.tools.git_cicd.git_tools.commit_and_push
+            name: commit_and_push
+          - function: src.resources.tools.git_cicd.git_tools.get_repository_status
+            name: get_repository_status
+  model-secrets:
+    anthropic:
+      api_key_env_var: ANTHROPIC_API_KEY
+    google:
+      api_key_env_var: GOOGLE_API_KEY
+    ollama: {}
+    openai:
+      api_key_env_var: OPENAI_API_KEY
+    openrouter:
+      api_key_env_var: OPENROUTER_API_KEY
+  protocols:
+    a2a:
+      agent_id: meu-coder-{random_suffix}
+      capabilities:
+      - code_implementation
+      - architecture_design
+      - test_automation
+      - code_analysis
+      - project_planning
+      - meu_framework
+      - git_integration
+      - ci_cd_workflow
+      - collaborative_development
+      description: Advanced MEU framework agent with Claude Code integration for software
+        development
+      discovery_port: 8100
+      discovery_uri: http://a2a-discovery:8101
+      display_name: MEU Coder Agent
+      enabled: true
+      jwt_secret_env_var: A2A_JWT_SECRET
+    mcp:
+      docs_uri: http://mcp-docs:8201
+      enabled: true
+      filesystem_uri: http://mcp-filesystem:8200

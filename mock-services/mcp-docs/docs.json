@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "documentation": {
+    "meu_framework": {
+      "title": "MEU Framework Documentation",
+      "version": "1.0.0",
+      "sections": [
+        {
+          "name": "Overview",
+          "content": "The Model-Execute-Update (MEU) framework for AI-assisted programming workflows"
+        },
+        {
+          "name": "Triplet Structure",
+          "content": "MEU triplets consist of Model (M), Execute (E), and Update (U) domains"
+        },
+        {
+          "name": "Workspace State Tracker",
+          "content": "Haskell-based system for tracking MEU workspace state and registries"
+        }
+      ]
+    }
+  },
+  "timestamp": "2025-10-20T13:00:00Z"
+}
